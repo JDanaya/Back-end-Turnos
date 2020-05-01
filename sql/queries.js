@@ -35,7 +35,7 @@ const NEXT_TURN = ( yesterday, id_category )=> {
         where heroku_a16fa1788047e89.turn.date >= '${yesterday}'
         and heroku_a16fa1788047e89.turn.is_pending = 1
         and heroku_a16fa1788047e89.turn.Category_id_category = ${id_category}
-        order by fecha asc
+        order by fecha, Menor_ID asc
         limit 1`
     }
 
@@ -50,7 +50,7 @@ const NEXT_TURN = ( yesterday, id_category )=> {
         on heroku_a16fa1788047e89.turn.Category_id_category = heroku_a16fa1788047e89.category.id_category
         where heroku_a16fa1788047e89.turn.date >= '${yesterday}'
         and heroku_a16fa1788047e89.turn.is_pending = 1
-        order by fecha asc
+        order by fecha, Menor_ID asc
         limit 1`
 }
 
