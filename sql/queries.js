@@ -191,7 +191,7 @@ const MAYOR_AFLUENCIA = () =>{
     SELECT MAX(Cantidad_turnos) as mayor_afluencia, date FROM (SELECT count(heroku_a16fa1788047e89.turn.id_turn) as Cantidad_turnos, date 
     FROM heroku_a16fa1788047e89.turn
     group by date
-    order by date desc
+    order by Cantidad_turnos desc
     limit 7
     ) as t`
 }
