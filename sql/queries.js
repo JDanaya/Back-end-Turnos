@@ -26,7 +26,7 @@ const NEXT_TURN = ( yesterday, id_category )=> {
     if(id_category){
         return `
         select heroku_a16fa1788047e89.user.first_name, heroku_a16fa1788047e89.user.last_name, heroku_a16fa1788047e89.user.email, heroku_a16fa1788047e89.user.phone, heroku_a16fa1788047e89.category.name as categoria, heroku_a16fa1788047e89.category.id_category as id_category, heroku_a16fa1788047e89.turn.date as fecha, 
-        heroku_a16fa1788047e89.turn.id_turn as Menor_ID
+        heroku_a16fa1788047e89.turn.id_turn as Menor_ID, heroku_a16fa1788047e89.turn.turn as turno
         from heroku_a16fa1788047e89.turn
         join heroku_a16fa1788047e89.user 
         on heroku_a16fa1788047e89.turn.User_id_user = heroku_a16fa1788047e89.user.id_user
@@ -42,7 +42,7 @@ const NEXT_TURN = ( yesterday, id_category )=> {
     //automatic turn
     return `
         select heroku_a16fa1788047e89.user.first_name, heroku_a16fa1788047e89.user.last_name, heroku_a16fa1788047e89.user.email, heroku_a16fa1788047e89.user.phone, heroku_a16fa1788047e89.category.name as categoria, heroku_a16fa1788047e89.category.id_category as id_category, heroku_a16fa1788047e89.turn.date as fecha, 
-        heroku_a16fa1788047e89.turn.id_turn as Menor_ID
+        heroku_a16fa1788047e89.turn.id_turn as Menor_ID, heroku_a16fa1788047e89.turn.turn as turno
         from heroku_a16fa1788047e89.turn
         join heroku_a16fa1788047e89.user 
         on heroku_a16fa1788047e89.turn.User_id_user = heroku_a16fa1788047e89.user.id_user

@@ -314,6 +314,59 @@ async function loginAdmin(req,res){
   
 }
 
+const sendNotification = async function(data) {
+  console.log('llego sendNotification')
+  var headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Authorization": "Basic ZTY2NzgxYmYtNDViZS00NmYwLTkxYTItYzVlOTc0MGJhM2Ri"
+  };
+  
+  var options = {
+    host: "onesignal.com",
+    port: 443,
+    path: "/api/v1/notifications",
+    method: "POST",
+    headers: headers
+  };
+  console.log(`Llego ${data}`)
+  var https = require('https');
+  var req = https.request(options, function(res) {  
+    res.on('data', function(data) {
+      console.log("Response:");
+      console.log(JSON.parse(data));
+    });
+  });
+  
+  req.on('error', function(e) {
+    console.log("ERROR:");
+    console.log(e);
+  });
+  
+  req.write(JSON.stringify(data));
+  req.end();
+};
+
+/*var message = (turno)=> { 
+  console.log('llego message')
+  return{
+    app_id: "016b254a-eed8-4683-a703-acdf33a89391",  
+  contents: {"en": `Es tu turno ${turno}`},
+  included_segments: ["All"]
+  }
+};*/
+
+const message = (turno)=>{
+  return { 
+    app_id: "016b254a-eed8-4683-a703-acdf33a89391",
+    headings: {"en": `Turno Actual:  ${turno}`},
+    contents: {"en": "¡Esta Atento!"},
+    included_segments: ["Active Users"],
+    filters: [
+      {"field": "last_session", "relation": "<", "hours_ago": "0.1"}
+    ]
+  }
+};
+
 /* ATENDER SIGUIENTE TURNO  */
 async function nextTurn(req,res){
 
@@ -382,6 +435,8 @@ async function nextTurn(req,res){
   console.log(MODULE)
 
   await driver.QUERY(queries.UPDATE_TURN(0, R[0].Menor_ID, MODULE));
+  const msg = message(R[0].turno)
+  await sendNotification(msg);
   return res.status(200).send( 
     {  
       status: 200, 
@@ -390,6 +445,8 @@ async function nextTurn(req,res){
   )
 
 }
+
+
 
 async function totalTurn(req,res){
 
